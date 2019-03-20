@@ -27,7 +27,7 @@ override_dh_auto_configure:
 	-DBSONCXX_POLY_USE_MNMLSTC=1
 
 override_dh_auto_build:
-	dh_auto_build -B$(CURDIR)/build -- all doxygen-current
+	dh_auto_build -B$(CURDIR)/build -- all
 
 override_dh_auto_install:
 	dh_auto_install -B$(CURDIR)/build
