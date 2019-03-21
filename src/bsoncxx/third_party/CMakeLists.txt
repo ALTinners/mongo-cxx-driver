@@ -16,6 +16,8 @@ include(ExternalProject)
 
 if (BSONCXX_POLY_USE_MNMLSTC AND NOT BSONCXX_POLY_USE_SYSTEM_MNMLSTC)
 
+   set(LIPPYS_EXTRA_HAXXS_INSTALL_DIR "/packages/mongo-cxx-driver/debian/tmp${CMAKE_INSTALL_PREFIX}/${BSONCXX_HEADER_INSTALL_DIR}/bsoncxx/third_party/mnmlstc")
+
     ExternalProject_Add(
         EP_mnmlstc_core
         GIT_REPOSITORY https://github.com/mnmlstc/core
@@ -26,13 +28,13 @@ if (BSONCXX_POLY_USE_MNMLSTC AND NOT BSONCXX_POLY_USE_SYSTEM_MNMLSTC)
         LOG_INSTALL ON
         LOG_UPDATE ON
         UPDATE_COMMAND ""
-        CMAKE_ARGS -DCMAKE_C_COMPILER=${CMAKE_C_COMPILER} -DCMAKE_CXX_COMPILER=${CMAKE_CXX_COMPILER} -DCMAKE_BUILD_TYPE=${CMAKE_BUILD_TYPE} -DBUILD_TESTING=Off -DCMAKE_INSTALL_PREFIX:PATH=${CMAKE_INSTALL_PREFIX}/${BSONCXX_HEADER_INSTALL_DIR}/bsoncxx/third_party/mnmlstc -DINCLUDE_INSTALL_DIR=.
+        CMAKE_ARGS -DCMAKE_C_COMPILER=${CMAKE_C_COMPILER} -DCMAKE_CXX_COMPILER=${CMAKE_CXX_COMPILER} -DCMAKE_BUILD_TYPE=${CMAKE_BUILD_TYPE} -DBUILD_TESTING=Off -DCMAKE_INSTALL_PREFIX:PATH=${LIPPYS_EXTRA_HAXXS_INSTALL_DIR} -DINCLUDE_INSTALL_DIR=.
     )
 
     ExternalProject_Add_Step(
         EP_mnmlstc_core
         fix-includes
-        WORKING_DIRECTORY ${CMAKE_INSTALL_PREFIX}/${BSONCXX_HEADER_INSTALL_DIR}/bsoncxx/third_party/mnmlstc
+        WORKING_DIRECTORY ${LIPPYS_EXTRA_HAXXS_INSTALL_DIR}
         COMMAND find . -type f | xargs perl -pi.bak -e "s|#include <core|#include <bsoncxx/third_party/mnmlstc/core|g"
         COMMAND find . -name *.bak | xargs rm
         DEPENDEES install
