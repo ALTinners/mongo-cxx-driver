@@ -213,6 +213,12 @@ install(FILES
     COMPONENT dev
 )
 
+install(DIRECTORY
+    /usr/include/bsoncxx/v_noabi/bsoncxx/third_party/mnmlstc
+    DESTINATION ${CMAKE_INSTALL_PREFIX}/${BSONCXX_HEADER_INSTALL_DIR}/bsoncxx/third_party
+    COMPONENT dev
+)
+
 install(TARGETS
     bsoncxx
     RUNTIME DESTINATION ${CMAKE_INSTALL_BINDIR} COMPONENT runtime
